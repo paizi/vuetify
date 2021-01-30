@@ -19,11 +19,7 @@ import App from './App.vue'
 // Globals
 import { IS_PROD } from '@/util/globals'
 
-Vue.config.productionTip = false
 
-registerPlugins(Vue)
-
-Vue.config.performance = !IS_PROD
 
 // Expose a factory function that creates a fresh set of store, router,
 // app instances on each call (which is called for each SSR request)
@@ -45,13 +41,17 @@ export async function createApp ({
   // create the app instance.
   // here we inject the router, store and ssr context to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
-  const app = new Vue({
-    router,
-    store,
-    i18n,
-    vuetify,
-    render: h => h(App),
-  })
+  const app = Vue.createApp(App)
+    .use(router)
+    .use(store)
+    // .use(i18n)
+    .mount('#app')
+
+  app.config.productionTip = false
+
+  registerPlugins(app)
+
+  app.config.performance = !IS_PROD
 
   // expose the app, the router and the store.
   // note we are not mounting the app here, since bootstrapping will be

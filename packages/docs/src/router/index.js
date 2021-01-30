@@ -1,13 +1,12 @@
 // Imports
 import Router from 'vue-router'
 import scrollBehavior from './scroll-behavior'
-import Vue from 'vue'
-import VueGtag from 'vue-gtag'
+// import VueGtag from 'vue-gtag'
 import { localeLookup } from '@/i18n/util'
 import redirects from './301.json'
 
 // Globals
-import { IS_SERVER } from '@/util/globals'
+// import { IS_SERVER } from '@/util/globals'
 
 import {
   abort,
@@ -18,14 +17,10 @@ import {
   redirect,
 } from '@/util/routes'
 
-// Setup
-Vue.use(Router)
-
 export function createRouter (vuetify, store, i18n) {
   const loadedLocales = ['en']
-  const router = new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
+  const router = Router.createRouter({
+    history: Router.createWebHistory(process.env.BASE_URL),
     scrollBehavior: (...args) => scrollBehavior(vuetify, store, ...args),
     routes: [
       locale([
@@ -82,11 +77,11 @@ export function createRouter (vuetify, store, i18n) {
       store.dispatch('pwa/update')
     }
   })
-
+/*
   Vue.use(VueGtag, {
     bootstrap: !IS_SERVER,
     config: { id: 'UA-75262397-3' },
   }, router)
-
+*/
   return router
 }
