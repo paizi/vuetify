@@ -27,11 +27,13 @@ module.exports = config => {
   config.plugin('VueSSRClientPlugin')
     .use(VueSSRClientPlugin)
 
+  /*
   config.plugin('html-spa')
     .use(HtmlWebpackPlugin, useMetadata('spa', '_fallback'))
 
   config.plugin('html-crowdin')
     .use(HtmlWebpackPlugin, useMetadata('crowdin'))
+  */
 
   config.plugin('pwa').after('html-spa')
 
